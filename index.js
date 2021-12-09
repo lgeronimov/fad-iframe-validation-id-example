@@ -20,7 +20,7 @@ class ResponseEvent {
 
 user = {
   username: 'someone@example.com.mx',
-  password: '1c3da398a8a4827fbf97cad82c9e24577a3',
+  password: '1c3da398a8a4827fbf97cad82c9e24577a',
 };
 
 identificationData = {
