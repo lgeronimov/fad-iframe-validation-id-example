@@ -24,7 +24,6 @@ user = {
 };
 
 identificationData = {
-  cardType: 'ine',
   cic: '136708660',
   ocr: "12345678",
   citizenId: '104325114',
@@ -43,9 +42,11 @@ window.addEventListener("message", (message) => {
     } else if (message.data.event === EventModule.SERVICE_RESULT) {
       // there is result from service
       console.log("There is result");
+      console.log(message.data.data);
     } else if (message.data.event === EventModule.PROCESS_COMPLETED) {
       // end of the process
       console.log("Process completed");
+      console.log(message.data.data);
     }
   } else return;
 });
