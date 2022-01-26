@@ -24,9 +24,10 @@ user = {
 };
 
 identificationData = {
-  cic: '136708660',
-  ocr: "12345678",
-  citizenId: '104325114',
+  documentNumber: "179305873",
+  backNumber: "4327084136899",
+  personalNumber: "4327084136899",
+  verificationNumber: null
 };
 
 // subscribe to message event to recive the events from the iframe
