@@ -19,14 +19,15 @@ class ResponseEvent {
 }
 
 user = {
-  username: 'someone@example.com.mx',
-  password: '1c3da398a8a4827fbf97cad82c9e24577a',
+  username: "someone@example.com.mx",
+  password: "1c3da398a8a4827fbf97cad82c9e24577a",
 };
 
 identificationData = {
-  cic: '136708660',
-  ocr: "12345678",
-  citizenId: '104325114',
+  documentNumber: "1232012200377",
+  backNumber: "0045130213584",
+  personalNumber: "LNVLMR94042532H400",
+  verificationNumber: "00"
 };
 
 // subscribe to message event to recive the events from the iframe
