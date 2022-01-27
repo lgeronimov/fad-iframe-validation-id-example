@@ -61,6 +61,7 @@ function initIframe() {
     iframe.contentWindow.postMessage(new ResponseEvent(EventModule.PROCESS_INIT, {
       user: this.user,
       identificationData: this.identificationData,
+      // identificationData: JSON.parse(sessionStorage.getItem('identificationData')), use with capture id integration
     }
   ), "https://uatapiweb.firmaautografa.com/");
   };
