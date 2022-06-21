@@ -3,10 +3,12 @@ window.onload = function () {
 };
 
 const EventModule = {
-  PROCESS_INIT: "INIT_MODULE",
+  INIT_MODULE: "INIT_MODULE",
+  PROCESS_INIT: "PROCESS_INIT",
   PROCESS_ERROR: "PROCESS_ERROR",
   PROCESS_COMPLETED: "PROCESS_COMPLETED",
-  SERVICE_RESULT: "SERVICE_RESULT"
+  MODULE_READY: "MODULE_READY",
+  SERVICE_RESULT: "SERVICE_RESULT",
 }
 
 class ResponseEvent {
@@ -19,20 +21,25 @@ class ResponseEvent {
 }
 
 user = {
-  username: 'someone@example.com.mx',
-  password: '1c3da398a8a4827fbf97cad82c9e24577a',
+  username: "example@email.com",
+  password: "password"
 };
 
 identificationData = {
-  cic: '136708660',
-  ocr: "12345678",
-  citizenId: '104325114',
+  documentNumber: "179305873",
+  backNumber: "4327084136899",
+  personalNumber: "4327084136899",
+  verificationNumber: null
 };
 
 // subscribe to message event to recive the events from the iframe
 window.addEventListener("message", (message) => {
   // IMPORTANT: check the origin of the data!
   if (message.origin.includes("firmaautografa.com")) {
+    if (message.data.event === EventModule.MODULE_READY) {
+      // MODULE_READY
+      initModule();
+    }
     if (message.data.event === EventModule.PROCESS_INIT) {
       // only informative
       console.log("Process init");
@@ -55,12 +62,21 @@ window.addEventListener("message", (message) => {
 
 function initIframe() {
   const iframe = document.getElementById("iframe-validation");
-  iframe.src = "https://uatapiweb.firmaautografa.com/";
-  iframe.onload = () => {
-    iframe.contentWindow.postMessage(new ResponseEvent(EventModule.PROCESS_INIT, {
+  const username = "example@email.com";
+  const password = "password";
+  // url - https://devapiframe.firmaautografa.com/fad-iframe-validation-id
+  const url = `https://devapiframe.firmaautografa.com/fad-iframe-validation-id?user=${username}&pwd=${password}`;
+  // set src to iframe
+  iframe.src = url;
+}
+
+function initModule() {
+  const iframe = document.getElementById("iframe-validation");
+  iframe.contentWindow.postMessage(
+    new ResponseEvent(EventModule.INIT_MODULE, {
       user: this.user,
       identificationData: this.identificationData,
-    }
-  ), "https://uatapiweb.firmaautografa.com/");
-  };
+    }),
+    iframe.src
+  );
 }
