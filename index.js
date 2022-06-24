@@ -20,12 +20,9 @@ class ResponseEvent {
   }
 }
 
-user = {
-  username: "example@email.com",
-  password: "password"
-};
 
-identificationData = {
+
+const identificationData = {
   documentNumber: "179305873",
   backNumber: "4327084136899",
   personalNumber: "4327084136899",
@@ -45,7 +42,7 @@ window.addEventListener("message", (message) => {
       console.log("Process init");
     } else if (message.data.event === EventModule.PROCESS_ERROR) {
       // restart component and send error
-      console.log("Unespected error:" + JSON.stringify(message.data.data));
+      console.log("Unexpected error:" + JSON.stringify(message.data.data));
     } else if (message.data.event === EventModule.SERVICE_RESULT) {
       // there is result from service
       console.log("There is result");
@@ -74,8 +71,7 @@ function initModule() {
   const iframe = document.getElementById("iframe-validation");
   iframe.contentWindow.postMessage(
     new ResponseEvent(EventModule.INIT_MODULE, {
-      user: this.user,
-      identificationData: this.identificationData,
+      identificationData,
     }),
     iframe.src
   );
