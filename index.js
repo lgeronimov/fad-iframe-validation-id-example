@@ -25,9 +25,25 @@ class ResponseEvent {
 const identificationData = {
   documentNumber: "179305873",
   backNumber: "4327084136899",
-  personalNumber: "4327084136899",
   verificationNumber: null
 };
+// errors
+const ERROR_CODE = {
+  NO_SERVICE : -1,
+  NO_INTERNET : -2,
+  REQUIRED_CREDENTIALS: -3,
+  BAD_CREDENTIALS : -4,
+  USER_NOT_EXIST : -5,
+  FAILED_GET_VALIDATION : -6,
+  FAILED_SEND_VALIDATION : -7,
+  NO_CITIZEN_IDENTIFIER : -8,
+  NO_CARD_TYPE : -9,
+  TIMEOUT_EXCEEDED : -10,
+  USER_NOT_CONFIGURED : -11,
+  SERVICES_URL_NOT_CONFIGURED : -12,
+  INVALID_DATA : -13
+};
+
 
 // subscribe to message event to recive the events from the iframe
 window.addEventListener("message", (message) => {
@@ -42,8 +58,15 @@ window.addEventListener("message", (message) => {
       console.log("Process init");
     } else if (message.data.event === EventModule.PROCESS_ERROR) {
       // restart component and send error
-      console.log("Unexpected error:" + JSON.stringify(message.data.data));
-    } else if (message.data.event === EventModule.SERVICE_RESULT) {
+      if (message.data.data.code === ERROR_CODE.INVALID_DATA) {
+        // capture id again
+        console.error(message.data)
+      } else {
+        // do something
+        console.log("Unexpected error:" + JSON.stringify(message.data.data));
+      }
+    }
+    else if (message.data.event === EventModule.SERVICE_RESULT) {
       // there is result from service
       console.log("There is result");
       console.log(message.data.data);
