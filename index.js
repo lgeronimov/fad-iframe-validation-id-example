@@ -44,6 +44,33 @@ const ERROR_CODE = {
   INVALID_DATA : -13
 };
 
+class Result {
+  anioEmision;
+  anioRegistro;
+  claveElector;
+  claveMensaje;
+  codigoValidacion;
+  estatus;
+  idValidation;
+  mensaje;
+  numeroEmision;
+  ocr;
+  vigencia;
+  constructor(data) {
+    this.anioEmision = data.anioEmision;
+    this.anioRegistro = data.anioRegistro;
+    this.claveElector = data.claveElector;
+    this.claveMensaje = data.claveMensaje;
+    this.codigoValidacion = data.codigoValidacion;
+    this.estatus = data.estatus;
+    this.idValidation = data.idValidation;
+    this.mensaje = data.mensaje;
+    this.numeroEmision = data.numeroEmision;
+    this.ocr = data.ocr;
+    this.vigencia =  data.vigencia;
+  }
+}
+
 
 // subscribe to message event to recive the events from the iframe
 window.addEventListener("message", (message) => {
@@ -54,9 +81,11 @@ window.addEventListener("message", (message) => {
       initModule();
     }
     if (message.data.event === EventModule.PROCESS_INIT) {
+      // PROCESS_INIT
       // only informative
       console.log("Process init");
     } else if (message.data.event === EventModule.PROCESS_ERROR) {
+      // PROCESS_ERROR
       // restart component and send error
       if (message.data.data.code === ERROR_CODE.INVALID_DATA) {
         // capture id again
@@ -73,7 +102,9 @@ window.addEventListener("message", (message) => {
     } else if (message.data.event === EventModule.PROCESS_COMPLETED) {
       // end of the process
       console.log("Process completed");
-      console.log(message.data.data);
+      const result = new Result(message.data.data);
+      console.log("Result:", result );
+      
     }
   } else return;
 });
@@ -81,6 +112,7 @@ window.addEventListener("message", (message) => {
 
 
 function initIframe() {
+  // get iframe
   const iframe = document.getElementById("iframe-validation");
   const username = "example@email.com";
   const password = "password";
