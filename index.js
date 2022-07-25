@@ -22,7 +22,7 @@ class ResponseEvent {
 
 
 
-const identificationData = {
+const IDENTIFICATION_DATA = {
   documentNumber: "179305873",
   backNumber: "4327084136899",
   verificationNumber: null
@@ -114,10 +114,9 @@ window.addEventListener("message", (message) => {
 function initIframe() {
   // get iframe
   const iframe = document.getElementById("iframe-validation");
-  const username = "example@email.com";
-  const password = "password";
   // url - https://devapiframe.firmaautografa.com/fad-iframe-validation-id
-  const url = `https://devapiframe.firmaautografa.com/fad-iframe-validation-id?user=${username}&pwd=${password}`;
+  const tkn = "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX";
+  const url = `https://devapiframe.firmaautografa.com/fad-iframe-validation-id?tkn=${tkn}`;
   // set src to iframe
   iframe.src = url;
 }
@@ -126,7 +125,7 @@ function initModule() {
   const iframe = document.getElementById("iframe-validation");
   iframe.contentWindow.postMessage(
     new ResponseEvent(EventModule.INIT_MODULE, {
-      identificationData,
+      identificationData: IDENTIFICATION_DATA
     }),
     iframe.src
   );
